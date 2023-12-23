@@ -15,6 +15,18 @@ export class WasmMatrix {
     static stateStruct: number = 4;
 
     public static async init(count: number) {
+        if (typeof globalThis.Deno !== 'undefined') {
+            await import('./matrix');
+            this.wasm = window['wasmMatrix'];
+
+            while (!this.wasm['asm']) {
+                await new Promise((resolve) => setTimeout(resolve, 20));
+            }
+
+            this.allocMatrix(count);
+            return;
+        }
+        
         await new Promise((resolve)=>{
             const script = document.createElement('script');
             script.async = true;

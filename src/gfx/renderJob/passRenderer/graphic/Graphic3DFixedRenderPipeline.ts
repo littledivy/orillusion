@@ -195,12 +195,12 @@ export class Graphic3DFixedRenderPipeline {
             label: label,
             code: code,
         });
-        shaderModule.getCompilationInfo().then((e) => {
-            if (e.messages.length > 0) {
-                console.log(code);
-                console.log(e);
-            }
-        });
+        // shaderModule.getCompilationInfo().then((e) => {
+        //     if (e.messages.length > 0) {
+        //         console.log(code);
+        //         console.log(e);
+        //     }
+        // });
         return shaderModule;
     }
 }

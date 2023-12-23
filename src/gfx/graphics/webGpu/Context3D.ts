@@ -101,7 +101,7 @@ class Context3D extends CEventDispatcher {
 
         // configure webgpu context
         this.device.label = 'device';
-        this.presentationFormat = navigator.gpu.getPreferredCanvasFormat();
+        this.presentationFormat = navigator.gpu.getPreferredCanvasFormat?.() || "bgra8unorm";
         this.context = this.canvas.getContext('webgpu');
         this.context.configure({
             device: this.device,
@@ -109,14 +109,18 @@ class Context3D extends CEventDispatcher {
             usage: GPUTextureUsage.COPY_DST | GPUTextureUsage.RENDER_ATTACHMENT,
             alphaMode: 'premultiplied',
             colorSpace: `srgb`,
+            // @ts-ignore
+            height: this.canvas.clientHeight * this.pixelRatio * this.super,
+            // @ts-ignore
+            width: this.canvas.clientWidth * this.pixelRatio * this.super,
         });
 
         this._resizeEvent = new CResizeEvent(CResizeEvent.RESIZE, { width: this.windowWidth, height: this.windowHeight })
-        const resizeObserver = new ResizeObserver(() => {
-            this.updateSize()
-            Texture.destroyTexture()
-        });
-        resizeObserver.observe(this.canvas);
+        // const resizeObserver = new ResizeObserver(() => {
+        //     this.updateSize()
+        //     Texture.destroyTexture()
+        // });
+        // resizeObserver.observe(this.canvas);
         this.updateSize();
         return true;
     }

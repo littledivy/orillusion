@@ -286,15 +286,15 @@ fn dir_to_faceId(pt:vec3<f32>) -> i32 {
     }
 
     fn decodeDepth( color:vec4<f32> ) -> f32{
-      var depth = 0.0 ;
-      const bitShifts = vec4<f32>(1.0 / (256.0 * 256.0 * 256.0), 1.0 / (256.0 * 256.0), 1.0 / 256.0, 1.0); 
+      var depth = 0.0;
+      var bitShifts = vec4<f32>(1.0 / (256.0 * 256.0 * 256.0), 1.0 / (256.0 * 256.0), 1.0 / 256.0, 1.0); 
       depth = dot(color, bitShifts);
       return depth;
     }
 
     fn encodeDepth( depth:f32 ) -> vec4<f32>{
-      const bitSh  = vec4<f32>(256.0 * 256.0 * 256.0, 256.0 * 256.0, 256.0, 1.0);
-      const bitMsk = vec4<f32>(0, 1.0 / 256.0, 1.0 / 256.0, 1.0 / 256.0);
+      var bitSh  = vec4<f32>(256.0 * 256.0 * 256.0, 256.0 * 256.0, 256.0, 1.0);
+      var bitMsk = vec4<f32>(0.0, 1.0 / 256.0, 1.0 / 256.0, 1.0 / 256.0);
       var comp:vec4<f32>;
       comp  = depth * bitSh;
       comp  = fract(comp);

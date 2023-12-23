@@ -128,7 +128,9 @@ export let ShadowMapping_frag: string = /*wgsl*/ `
               var offset = vec2<f32>(f32(x), f32(y)) * uvOnePixel;
               
               // visibility += textureSampleCompare(shadowMap, shadowMapSampler, varying_shadowUV + offset, depthTexIndex, shadowPos.z - bias);
-              var depth = textureSampleLevel(shadowMap, shadowMapSampler, varying_shadowUV + offset, depthTexIndex, 0);
+
+              // deno: bug in wgpu-rs (naga expects level value to be float)
+              var depth = textureSampleLevel(shadowMap, shadowMapSampler, varying_shadowUV + offset, depthTexIndex, 0.0);
               if ((shadowPos.z - bias ) < depth) {
                 visibility += 1.0 ;
               }
@@ -165,7 +167,9 @@ export let ShadowMapping_frag: string = /*wgsl*/ `
                 for (var y: f32 = -offset; y < offset; y += offset / (samples * 0.5)) {
                   for (var z: f32 = -offset; z < offset; z += offset / (samples * 0.5)) {
                     let offsetDir = normalize(dir.xyz + vec3<f32>(x, y, z));
-                    var depth = textureSampleLevel(pointShadowMap, pointShadowMapSampler, offsetDir, light.castShadow, 0);
+
+                    // deno: bug in wgpu-rs (naga expects level value to be float)
+                    var depth = textureSampleLevel(pointShadowMap, pointShadowMapSampler, offsetDir, light.castShadow, 0.0);
                     depth *= globalUniform.far;
                     if ((len - bias) > depth) {
                       shadow += 1.0 * dot(offsetDir, dir.xyz);
@@ -182,7 +186,7 @@ export let ShadowMapping_frag: string = /*wgsl*/ `
               let samples = 20;
               for (var j: i32 = 0; j < samples; j += 1) {
                 let offsetDir = normalize(dir.xyz + sampleOffsetDir[j] * sampleRadies);
-                var depth = textureSampleLevel(pointShadowMap, pointShadowMapSampler, offsetDir, light.castShadow, 0);
+                var depth = textureSampleLevel(pointShadowMap, pointShadowMapSampler, offsetDir, light.castShadow, 0.0);
                 depth *= globalUniform.far;
                 if ((len - bias) > depth) {
                   shadow += 1.0 * dot(offsetDir, dir.xyz);
@@ -192,7 +196,7 @@ export let ShadowMapping_frag: string = /*wgsl*/ `
           #endif
   
           #if USE_HARD_SHADOW
-              var depth = textureSampleLevel(pointShadowMap, pointShadowMapSampler, dir.xyz, light.castShadow, 0);
+              var depth = textureSampleLevel(pointShadowMap, pointShadowMapSampler, dir.xyz, light.castShadow, 0.0);
               depth *= globalUniform.far;
               if ((len - bias) > depth) {
                 shadow = 1.0;

@@ -12,6 +12,8 @@
  */
 
 function ___$insertStyle(css) {
+  return; /* Deno */
+
   if (!css) {
     return;
   }
@@ -1541,6 +1543,8 @@ var css = {
     doc.getElementsByTagName('head')[0].appendChild(link);
   },
   inject: function inject(cssContent, indoc) {
+    return; /* Deno support */
+
     var doc = indoc || document;
     var injected = document.createElement('style');
     injected.type = 'text/css';

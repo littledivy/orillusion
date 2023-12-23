@@ -289,7 +289,7 @@ export class AtmosphericScatteringSky_shader {
         setting.rayleighHeight = 8000.0;
         setting.earthRadius = 6360000.0;
         setting.earthAtmTopRadius = 6420000.0;
-        setting.earthCenter = vec3<f32>(0, -setting.earthRadius, 0);
+        setting.earthCenter = vec3<f32>(0.0, -setting.earthRadius, 0.0);
         setting.waveLambdaMie = vec3<f32>(0.0000002);
 
         // wavelength with 680nm, 550nm, 450nm
@@ -298,7 +298,7 @@ export class AtmosphericScatteringSky_shader {
         // see https://www.shadertoy.com/view/MllBR2
         setting.waveLambdaOzone = vec3<f32>(1.36820899679147, 3.31405330400124, 0.13601728252538)* 0.0000006 * 2.504;
 
-        var eye:vec3<f32> = vec3<f32>(0,eyePosition,0);
+        var eye:vec3<f32> = vec3<f32>(0.0,eyePosition,0.0);
         var sky0:vec4<f32> = ComputeSkyInscattering(setting, eye, V, L);
         var sky = vec3<f32>(sky0.rgb);
 

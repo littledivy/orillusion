@@ -255,11 +255,11 @@ export class ComputeShader extends ShaderPassBase {
             code: this._destCS,
         });
 
-        shaderModule.getCompilationInfo().then((e) => {
-            if (e.messages.length > 0) {
-                console.log(this._destCS);
-            }
-        });
+        // shaderModule.getCompilationInfo().then((e) => {
+        //     if (e.messages.length > 0) {
+        //         console.log(this._destCS);
+        //     }
+        // });
 
         this._csShaderModule = shaderModule;
         return shaderModule;

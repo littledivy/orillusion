@@ -454,12 +454,12 @@ export class RenderShaderPass extends ShaderPassBase {
                 code: shader,
             });
 
-            shaderModule.getCompilationInfo().then((e) => {
-                if (e.messages.length > 0) {
-                    console.log(shader);
-                    console.log(e);
-                }
-            });
+            // shaderModule.getCompilationInfo().then((e) => {
+            //     if (e.messages.length > 0) {
+            //         console.log(shader);
+            //         console.log(e);
+            //     }
+            // });
             ShaderUtil.renderShaderModulePool.set(key, shaderModule);
         }
 
